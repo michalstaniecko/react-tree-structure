@@ -68,17 +68,17 @@ function Node({child, level}: INode) {
         setShowChildren(show => !show);
     };
 
-    return (<div style={{paddingLeft: `${40}px`}} key={name}>
+    return (<div style={{paddingLeft: `${level === 0 ? 0 : 40}px`}} key={name}>
         {children ? (
             <button onClick={handleClick}>
-                <Tick show={showChildren} /> {name}
+                <Tick show={showChildren}/> {name}
             </button>
         ) : name}
         {children && showChildren && (
             children.map((child: File) => <Node
-                    key={child.name}
-                    child={child} level={level + 1}
-                />)
+                key={child.name}
+                child={child} level={level + 1}
+            />)
         )}
     </div>)
 }
@@ -86,9 +86,7 @@ function Node({child, level}: INode) {
 function App() {
     return (
         <>
-            <ul>
-                {files.children.map((child: File, index) => <Node key={index} child={child} level={0}/>)}
-            </ul>
+            {files.children.map((child: File, index) => <Node key={index} child={child} level={0}/>)}
         </>
     )
 }
